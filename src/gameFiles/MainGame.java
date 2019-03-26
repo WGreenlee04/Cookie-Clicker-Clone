@@ -22,7 +22,7 @@ public class MainGame {
         panel.add(button);
 
         frame.add(panel);
-        frame.setSize(300, 300);
+        frame.setSize(1920, 1080);
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);

@@ -1,31 +1,93 @@
 package gameFiles;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
-import javax.swing.*;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
-public class MainGame {
+public class MainGame implements MouseListener {
+	
+	static final int JFRAME_HEIGHT = 1080;
+	static final int JFRAME_LENGTH = 1920;
+	
+	private int score;
+	private int score_multiplier;
+	
+	public MainGame() {
+		score = 0;
+		score_multiplier = 1;
+	}
 
-    public static void main(String [] args) {
+    public static void main(String [] args) throws IOException {
 
-        JFrame frame = new JFrame("JFrame Example");
+        JFrame frame = new JFrame("Cookie Clicker");
 
         JPanel panel = new JPanel();
         panel.setLayout(new FlowLayout());
 
-        JLabel label = new JLabel("This is a label!");
-
-        JButton button = new JButton();
-        button.setText("Press me");
-
-        panel.add(label);
-        panel.add(button);
-
+        /***************ADD IMAGE AND CENTER WEST [LEFT]*******************/
+        BufferedImage cookimg = ImageIO.read(new File("D:/Everything else/Eclipse/TheGame/src/pics/Cookie.jpg"));
+        JLabel label = new JLabel(new ImageIcon(cookimg));
+        panel.setLayout(new BorderLayout());
+        panel.add(label, BorderLayout.WEST);
+        panel.addMouseListener(null);
+        /*****************************************************************/
+        
         frame.add(panel);
-        frame.setSize(1920, 1080);
+        label.setLocation(10,10);
+        frame.setSize(JFRAME_LENGTH, JFRAME_HEIGHT);
+        frame.getContentPane().setBackground(Color.BLACK);
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
     }
+    
+    public void mouseClicked(MouseEvent e) {
+    	int vertcent = JFRAME_HEIGHT/2;
+    	int horizcent = JFRAME_LENGTH/2;
+    	if((e.getX()<512) && (Math.abs(e.getY()-vertcent)<256)){
+    		cookieClicked();
+    	}
+    }
+    
+    public void cookieClicked() {
+    	System.out.println("COOKIE CLICKED!");
+    	score += score_multiplier;
+    }
+
+	@Override
+	public void mouseEntered(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

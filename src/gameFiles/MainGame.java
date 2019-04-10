@@ -54,14 +54,14 @@ public class MainGame implements MouseListener {
     	int vertcent = JFRAME_HEIGHT/2;
     	int horizcent = JFRAME_LENGTH/2;
     	if((e.getX()<512) && (Math.abs(e.getY()-vertcent)<256)){
-    		cookieClicked();
+    		onCookieClick();
     	}
     }
 
-    public void cookieClicked() {
+    public void onCookieClick() {
     	System.out.println("COOKIE CLICKED!");
     	score += (baseScore* score_multiplier);
-
+    	
     }
 
 	@Override

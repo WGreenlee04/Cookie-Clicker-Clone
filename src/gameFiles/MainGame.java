@@ -32,7 +32,7 @@ public class MainGame implements MouseListener {
         panel.setLayout(new FlowLayout());
 
         /***************ADD IMAGE AND CENTER WEST [LEFT]*******************/
-        BufferedImage cookimg = ImageIO.read(new File("D:/Everything else/Eclipse/TheGame/src/pics/Cookie.jpg"));
+        BufferedImage cookimg = ImageIO.read(new File("H:/pics/Cookie.JFIF"));
         JLabel label = new JLabel(new ImageIcon(cookimg));
         panel.setLayout(new BorderLayout());
         panel.add(label, BorderLayout.WEST);

@@ -38,20 +38,20 @@ public class MainGame implements MouseListener {
         /**********************PROMPT FOR IMAGE DIRECTORY******************/
         JFrame prompt=new JFrame("Where dat File?");
         JPanel pPanel=new JPanel();
+        JLabel label2 = new JLabel();
+        pPanel.setLayout(new BorderLayout());
+        pPanel.add(label2, BorderLayout.WEST);
+        pPanel.addMouseListener(null);
         pPanel.setLayout(new FlowLayout());
-        frame.add(panel);
+        prompt.add(pPanel);
         /******************************************************************/
 
         /***************ADD IMAGE AND CENTER WEST [LEFT]*******************/
         BufferedImage cookimg = ImageIO.read(new File("H:/pics/Cookie.JFIF"));
         JLabel label = new JLabel(new ImageIcon(cookimg));
-        pPanel.setLayout(new BorderLayout());
-        pPanel.add(label, BorderLayout.WEST);
-        pPanel.addMouseListener(null);
-        prompt.setSize(480, 220);
-        prompt.setLocationRelativeTo(null);
-        prompt.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        prompt.setVisible(true);
+        panel.setLayout(new BorderLayout());
+        panel.add(label, BorderLayout.WEST);
+        panel.addMouseListener(null);
         /*****************************************************************/
 
         frame.add(panel);

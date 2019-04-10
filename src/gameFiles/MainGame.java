@@ -19,11 +19,13 @@ public class MainGame implements MouseListener {
 	private int score;
 	private int score_multiplier;
 	private int baseScore;
+	private String dir;
 
 	public MainGame() {
 		score = 0;
 		score_multiplier = 1;
-		baseScore=1;
+		baseScore = 1;
+		dir = "H:/pics/Cookie.JFIF";
 	}
 
     public static void main(String [] args) throws IOException {
@@ -33,18 +35,29 @@ public class MainGame implements MouseListener {
         JPanel panel = new JPanel();
         panel.setLayout(new FlowLayout());
 
+        /**********************PROMPT FOR IMAGE DIRECTORY******************/
+        JFrame prompt=new JFrame("Where dat File?");
+        JPanel pPanel=new JPanel();
+        pPanel.setLayout(new FlowLayout());
+        frame.add(panel);
+        /******************************************************************/
+
         /***************ADD IMAGE AND CENTER WEST [LEFT]*******************/
         BufferedImage cookimg = ImageIO.read(new File("H:/pics/Cookie.JFIF"));
         JLabel label = new JLabel(new ImageIcon(cookimg));
-        panel.setLayout(new BorderLayout());
-        panel.add(label, BorderLayout.WEST);
-        panel.addMouseListener(null);
+        pPanel.setLayout(new BorderLayout());
+        pPanel.add(label, BorderLayout.WEST);
+        pPanel.addMouseListener(null);
+        prompt.setSize(480, 220);
+        prompt.setLocationRelativeTo(null);
+        prompt.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        prompt.setVisible(true);
         /*****************************************************************/
 
         frame.add(panel);
         label.setLocation(10,10);
         frame.setSize(JFRAME_LENGTH, JFRAME_HEIGHT);
-        frame.getContentPane().setBackground(Color.BLACK);
+        //frame.getContentPane().setBackground(Color.BLACK);
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
@@ -61,7 +74,7 @@ public class MainGame implements MouseListener {
     public void onCookieClick() {
     	System.out.println("COOKIE CLICKED!");
     	score += (baseScore* score_multiplier);
-    	
+
     }
 
 	@Override

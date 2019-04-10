@@ -42,7 +42,6 @@ public class MainGame implements MouseListener {
         pPanel.setLayout(new BorderLayout());
         pPanel.add(label2, BorderLayout.WEST);
         pPanel.addMouseListener(null);
-        pPanel.setLayout(new FlowLayout());
         prompt.add(pPanel);
         /******************************************************************/
 

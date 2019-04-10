@@ -18,10 +18,12 @@ public class MainGame implements MouseListener {
 
 	private int score;
 	private int score_multiplier;
+	private int baseScore;
 
 	public MainGame() {
 		score = 0;
 		score_multiplier = 1;
+		baseScore=1;
 	}
 
     public static void main(String [] args) throws IOException {
@@ -58,7 +60,8 @@ public class MainGame implements MouseListener {
 
     public void cookieClicked() {
     	System.out.println("COOKIE CLICKED!");
-    	score += score_multiplier;
+    	score += (baseScore* score_multiplier);
+
     }
 
 	@Override

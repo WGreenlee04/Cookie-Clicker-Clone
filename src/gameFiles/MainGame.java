@@ -9,21 +9,17 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+import javax.imageio.*;
+import javax.swing.*;
 
 public class MainGame implements MouseListener {
-	
+
 	static final int JFRAME_HEIGHT = 1080;
 	static final int JFRAME_LENGTH = 1920;
-	
+
 	private int score;
 	private int score_multiplier;
-	
+
 	public MainGame() {
 		score = 0;
 		score_multiplier = 1;
@@ -43,7 +39,7 @@ public class MainGame implements MouseListener {
         panel.add(label, BorderLayout.WEST);
         panel.addMouseListener(null);
         /*****************************************************************/
-        
+
         frame.add(panel);
         label.setLocation(10,10);
         frame.setSize(JFRAME_LENGTH, JFRAME_HEIGHT);
@@ -52,7 +48,7 @@ public class MainGame implements MouseListener {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
     }
-    
+
     public void mouseClicked(MouseEvent e) {
     	int vertcent = JFRAME_HEIGHT/2;
     	int horizcent = JFRAME_LENGTH/2;
@@ -60,7 +56,7 @@ public class MainGame implements MouseListener {
     		cookieClicked();
     	}
     }
-    
+
     public void cookieClicked() {
     	System.out.println("COOKIE CLICKED!");
     	score += score_multiplier;
@@ -69,25 +65,25 @@ public class MainGame implements MouseListener {
 	@Override
 	public void mouseEntered(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void mouseExited(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void mousePressed(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

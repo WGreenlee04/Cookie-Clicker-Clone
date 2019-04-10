@@ -12,20 +12,20 @@ import java.io.*;
 import javax.imageio.*;
 import javax.swing.*;
 
-	public class MainGame implements MouseListener {
+public class MainGame implements MouseListener {
 
-		static final int JFRAME_HEIGHT = 1080;
-		static final int JFRAME_LENGTH = 1920;
+	static final int JFRAME_HEIGHT = 1080;
+	static final int JFRAME_LENGTH = 1920;
 
-		static int score = 0;
-		private int score_multiplier;
+	static int score = 0;
+	private int score_multiplier;
 
-		private static JFrame frame = new JFrame("Cookie Clicker");
-		private static JTextArea ccta = new JTextArea("Cookies: " + score);
+	private static JFrame frame = new JFrame("Cookie Clicker");
+	private static JTextArea ccta = new JTextArea("Cookies: " + score);
 
-		public MainGame() {
-			score_multiplier = 1;
-	}
+	public MainGame() {
+		score_multiplier = 1;
+}
 
 	public static void main(String [] args) throws IOException {
 

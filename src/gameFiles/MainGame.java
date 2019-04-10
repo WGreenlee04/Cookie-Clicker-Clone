@@ -6,9 +6,8 @@ import java.awt.FlowLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-
+import java.util.*;
+import java.io.*;
 import javax.imageio.*;
 import javax.swing.*;
 

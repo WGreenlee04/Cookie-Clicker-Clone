@@ -10,6 +10,8 @@ import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.util.*;
 import java.io.*;
+import java.sql.Time;
+
 import javax.imageio.*;
 import javax.swing.*;
 
@@ -25,21 +27,23 @@ public class MainGame implements MouseListener {
 	private static int framecount;
 	static int score = 0;
 	static int cumulative_score = 0;
-	private int score_multiplier;
+	static int score_multiplier= 1;
 	private static String cooklvstr = "";
 	private static int cooklvint = 0;
 	private final static int THRESHOLD1 = 5000;
 	private static boolean passedTH1;
 	private static boolean passedTH2;
 	private final static int THRESHOLD2 = 20000;
+	private static double timepassed = 0;
+	private static int truetime = 0;
 
 	//J STUFF
 	private static JFrame frame = new JFrame("Cookie Clicker");
 	private static JTextArea ccta = new JTextArea("Cookies: " + score);
 	private static JPanel cookiepanel = new JPanel();
+	private static JPanel mainPanel = new JPanel();
 
 	public MainGame() {
-		score_multiplier = 1;
 		framecount = 0;
 		passedTH1 = false;
 		passedTH2 = false;
@@ -60,14 +64,17 @@ public class MainGame implements MouseListener {
 		bg2.setBackground(new Color(132, 86, 60));
 		bg2.setLayout(null);
 		bg2.setBounds(0, vertcent+256, JFRAME_LENGTH-512, JFRAME_HEIGHT-vertcent-256);
+		
+		
     /***************ADD IMAGE AND CENTER WEST [LEFT]******************/
 		BufferedImage cookimg = ImageIO.read(new File("D:\\Everything else\\Eclipse\\TheGame\\src\\pics\\Cookie.jpg"));
 		JLabel label = new JLabel(new ImageIcon(cookimg));
 		cookiepanel.setLayout(new BorderLayout());
 		cookiepanel.add(label, BorderLayout.WEST);
-    /*************************JFRAME STUFF****************************/
+    /****************************J SETUP******************************/
 		frame.add(bg1);
 		frame.add(bg2);
+		frame.add(mainPanel);
 		frame.add(ccta, BorderLayout.NORTH);
 		frame.add(cookiepanel);
 		frame.setSize(JFRAME_LENGTH, JFRAME_HEIGHT);
@@ -76,6 +83,14 @@ public class MainGame implements MouseListener {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.setVisible(true);
+        mainPanel.setBounds(frame.getBounds());
+        mainPanel.setOpaque(false);
+        mainPanel.addMouseListener(new MouseAdapter() {
+		     @Override
+		     public void mousePressed(MouseEvent e) {
+		        checkClick(e);
+		     }
+		  });
     /****************************RUN GAME*****************************/
        runGame();
     /**************************END OF MAIN****************************/
@@ -83,33 +98,31 @@ public class MainGame implements MouseListener {
 
 	public static void runGame() throws IOException {
 		while(true) {
+			/*************BASIC UPDATES*************/
 			framecount++;
+			timepassed++;
 			updateText(ccta);
-			frame.addMouseListener(new MouseAdapter() { 
-		          public void mousePressed(MouseEvent me) { 
-		            mouseClicked(me);
-		            System.out.println("MOUSE PRESSED");
-		          } 
-		        }); 
+			/*********COOKIE UPGRADE CHECKS*********/
 			if(cumulative_score > THRESHOLD1) {
 				if(!passedTH1) {
 					upgradeCookie();
+					update();
 					passedTH1 = true;
 				}
 			}
 			if(cumulative_score > THRESHOLD2) {
 				if(!passedTH2) {
 					upgradeCookie();
+					update();
 					passedTH2 = true;
 				}
 			}
-			frame.setSize(JFRAME_LENGTH, JFRAME_HEIGHT);
-			frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+			/**************************************/
 		}
 	}
 
 	public static void updateText(JTextArea ta) {
-		ta.setText("Cookies: " + score);
+		ta.setText("Cookies: " + score + "\t\t\t\t\t  Time Wasted: " + calculateTime());
 		frame.add(ta);
 	}
 	
@@ -118,24 +131,54 @@ public class MainGame implements MouseListener {
 		cookiepanel.removeAll();
 		cookiepanel.add(newimglabel, BorderLayout.WEST);
 	}
+	
+	public static String calculateTime() {
+		double secondspassed = (timepassed)/230;
+		if(secondspassed > 60 && secondspassed < 3600) {
+			return String.valueOf(round(secondspassed/60,2))+" minutes";
+		} else if(secondspassed > 3600) {
+			return String.valueOf(round(secondspassed/3600,2))+" hours lol";
+		} else {
+			return String.valueOf(round(secondspassed,2)) + " seconds";
+		}
+		
+	}
+	
+	public static double round(double value, int places) {
+	    if (places < 0) throw new IllegalArgumentException();
 
-	public void mouseClicked(MouseEvent e) {
+	    long factor = (long) Math.pow(10, places);
+	    value = value * factor;
+	    long tmp = Math.round(value);
+	    return (double) tmp / factor;
+	}
+
+	public static void checkClick(MouseEvent e) {
 		if((e.getX()<512) && (Math.abs(e.getY()-vertcent)<256)){
-		cookieClicked();
+			cookieClicked();
+		} else if(true) { //implement stuff l8r
+			
 		}
 	}
 
-	public void cookieClicked() {
-		System.out.println("COOKIE CLICKED!");
+	public static void cookieClicked() {
 		score += score_multiplier;
 		cumulative_score += score_multiplier;
+		updateText(ccta);
    	}
 	
 	public static void upgradeCookie() throws IOException {
 		cooklvint++;
 		cooklvstr = String.valueOf(cooklvint);
-		BufferedImage bi = ImageIO.read(new File("D:\\Everything else\\Eclipse\\TheGame\\src\\pics\\Cookie"+ cooklvstr + ".jpg"));
-		updateImg(bi);
+		if(cooklvint<3) {
+			BufferedImage bi = ImageIO.read(new File("D:\\Everything else\\Eclipse\\TheGame\\src\\pics\\Cookie"+ cooklvstr + ".jpg"));
+			updateImg(bi);
+		}
+	}
+	
+	public static void update() {
+		frame.setSize(JFRAME_LENGTH, JFRAME_HEIGHT);
+		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 	}
 
 	public int getScore() {
@@ -159,15 +202,21 @@ public class MainGame implements MouseListener {
 	}
 
 	@Override
-	public void mousePressed(MouseEvent arg0) {
+	public void mouseReleased(MouseEvent arg0) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void mouseReleased(MouseEvent arg0) {
+	public void mousePressed(MouseEvent arg0) {
 		// TODO Auto-generated method stub
+		
+	}
 
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

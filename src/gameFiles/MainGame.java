@@ -8,15 +8,15 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
-import java.util.*;
-import java.io.*;
 import java.sql.Time;
 
 import javax.imageio.*;
 import javax.swing.*;
+import java.io.*;
+import java.util.*;
 
 public class MainGame implements MouseListener {
-	
+
 	//FINAL PIXEL LENGTHS (CONSTANTS)
 	static final int JFRAME_HEIGHT = 1080;
 	static final int JFRAME_LENGTH = 1920;
@@ -43,13 +43,38 @@ public class MainGame implements MouseListener {
 	private static JPanel cookiepanel = new JPanel();
 	private static JPanel mainPanel = new JPanel();
 
-	public MainGame() {
+
+	//VERY IMPORTANT, FILL THESE.
+	private static String fileLocation="H:\\pics\\Cookie.JFIF";
+	private static File outputFile=new File("H:\\output.txt");
+
+	public MainGame() throws Exception {
 		framecount = 0;
 		passedTH1 = false;
 		passedTH2 = false;
-}
+		
+		if(outputFile.createNewFile()){
+			System.out.println("File Created Successfully");
+		}else{
+			System.out.println("File Already Exists");
+		}
+		
+		try{
+		fileGet(outputFile);
+		}
+		catch (FileNotFoundException e){
+			e.printStackTrace();
+		}
+		
+	}
+	public void fileGet(File outputFile2) throws Exception{
+		BufferedReader br=new BufferedReader(new FileReader(outputFile2));
+		while(br.readLine()!=null){
+			fileLocation=br.readLine();
+		}
+	}
 
-	public static void main(String [] args) throws IOException {
+	public static void main(String [] args) throws Exception {
 
 	/**********************INSTANTIATE********************************/
 		frame.setLayout(new BorderLayout());
@@ -64,10 +89,31 @@ public class MainGame implements MouseListener {
 		bg2.setBackground(new Color(132, 86, 60));
 		bg2.setLayout(null);
 		bg2.setBounds(0, vertcent+256, JFRAME_LENGTH-512, JFRAME_HEIGHT-vertcent-256);
-		
-		
+
+		//Cookie location ask
+		try (BufferedReader br = new BufferedReader(new FileReader(outputFile))) {
+		    String line;
+		    if ((line = br.readLine()) == null) {
+
+		    	Scanner scan = new Scanner(System.in);
+				System.out.println("Paste the full file path of your cookie picture here");
+				String filepath=scan.nextLine();
+
+
+				File out = outputFile;
+				FileWriter fw=new FileWriter(out);
+				BufferedWriter bw=new BufferedWriter(fw);
+				bw.write(filepath);
+				bw.newLine();
+
+				//end and close
+				bw.close();
+				scan.close();
+		    }
+		}
+
     /***************ADD IMAGE AND CENTER WEST [LEFT]******************/
-		BufferedImage cookimg = ImageIO.read(new File("D:\\Everything else\\Eclipse\\TheGame\\src\\pics\\Cookie.jpg"));
+		BufferedImage cookimg = ImageIO.read(new File(fileLocation));
 		JLabel label = new JLabel(new ImageIcon(cookimg));
 		cookiepanel.setLayout(new BorderLayout());
 		cookiepanel.add(label, BorderLayout.WEST);
@@ -125,13 +171,13 @@ public class MainGame implements MouseListener {
 		ta.setText("Cookies: " + score + "\t\t\t\t\t  Time Wasted: " + calculateTime());
 		frame.add(ta);
 	}
-	
+
 	public static void updateImg(BufferedImage bi) {
 		JLabel newimglabel = new JLabel(new ImageIcon(bi));
 		cookiepanel.removeAll();
 		cookiepanel.add(newimglabel, BorderLayout.WEST);
 	}
-	
+
 	public static String calculateTime() {
 		double secondspassed = (timepassed)/230;
 		if(secondspassed > 60 && secondspassed < 3600) {
@@ -141,9 +187,9 @@ public class MainGame implements MouseListener {
 		} else {
 			return String.valueOf(round(secondspassed,2)) + " seconds";
 		}
-		
+
 	}
-	
+
 	public static double round(double value, int places) {
 	    if (places < 0) throw new IllegalArgumentException();
 
@@ -157,7 +203,7 @@ public class MainGame implements MouseListener {
 		if((e.getX()<512) && (Math.abs(e.getY()-vertcent)<256)){
 			cookieClicked();
 		} else if(true) { //implement stuff l8r
-			
+
 		}
 	}
 
@@ -166,7 +212,7 @@ public class MainGame implements MouseListener {
 		cumulative_score += score_multiplier;
 		updateText(ccta);
    	}
-	
+
 	public static void upgradeCookie() throws IOException {
 		cooklvint++;
 		cooklvstr = String.valueOf(cooklvint);
@@ -175,7 +221,7 @@ public class MainGame implements MouseListener {
 			updateImg(bi);
 		}
 	}
-	
+
 	public static void update() {
 		frame.setSize(JFRAME_LENGTH, JFRAME_HEIGHT);
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -210,13 +256,13 @@ public class MainGame implements MouseListener {
 	@Override
 	public void mousePressed(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

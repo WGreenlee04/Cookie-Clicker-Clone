@@ -46,26 +46,26 @@ public class MainGame implements MouseListener {
 
 	//VERY IMPORTANT, FILL THESE.
 	private static String fileLocation="H:\\pics\\Cookie.JFIF";
-	private static File outputFile=new File("H:\\output.txt");
+	private static File outputFile=new File("H:\\output(DO NOT DELETE).txt");
 
 	public MainGame() throws Exception {
 		framecount = 0;
 		passedTH1 = false;
 		passedTH2 = false;
-		
+
 		if(outputFile.createNewFile()){
 			System.out.println("File Created Successfully");
 		}else{
 			System.out.println("File Already Exists");
 		}
-		
+
 		try{
 		fileGet(outputFile);
 		}
 		catch (FileNotFoundException e){
 			e.printStackTrace();
 		}
-		
+
 	}
 	public void fileGet(File outputFile2) throws Exception{
 		BufferedReader br=new BufferedReader(new FileReader(outputFile2));
